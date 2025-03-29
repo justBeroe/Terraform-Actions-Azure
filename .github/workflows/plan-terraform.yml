@@ -5,6 +5,10 @@ on:
     branches: [ "master" ]
   pull_request:
 
+permissions:
+  contents: read  # Allows reading repository contents
+  actions: read   # Allows reading GitHub Actions metadata
+
 env:
   ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
   ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
@@ -60,11 +64,12 @@ jobs:
       run: terraform init
 
     - name: Download Terraform Plan
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: terraform-plan
         path: .
-    
+        
+
     - name: Apply the terraform plan
       run: terraform apply -auto-approve terraform.plan
 
