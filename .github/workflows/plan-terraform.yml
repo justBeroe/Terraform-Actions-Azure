@@ -34,11 +34,15 @@ jobs:
     - name: Terraform Generate Plan
       run: terraform plan -out=terraform.plan
 
+    - name: List Files in Directory
+      run: ls -lah
+
     - name: Upload Terraform Plan
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: terraform-plan
         path: terraform.plan
+        if-no-files-found: ignore
 
   terraform-apply:
     name: 'Terraform Apply Job'
